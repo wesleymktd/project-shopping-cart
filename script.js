@@ -1,6 +1,5 @@
 // Esse tipo de comentário que estão antes de todas as funções são chamados de JSdoc,
 // experimente passar o mouse sobre o nome das funções e verá que elas possuem descrições! 
-
 // Fique a vontade para modificar o código já escrito e criar suas próprias funções!
 
 /**
@@ -22,6 +21,7 @@ const createProductImageElement = (imageSource) => {
  * @param {string} innerText - Texto do elemento.
  * @returns {Element} Elemento criado.
  */
+
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;
@@ -64,7 +64,7 @@ const getIdFromProductItem = (product) => product.querySelector('span.id').inner
  * @param {string} product.price - Preço do produto.
  * @returns {Element} Elemento de um item do carrinho.
  */
-const createCartItemElement = ({ id, title, price }) => {
+const createCartItemElement = ({ id, title, price }) => { // parametro object
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
@@ -72,4 +72,16 @@ const createCartItemElement = ({ id, title, price }) => {
   return li;
 };
 
-window.onload = () => { };
+const addChildElementItems = async (pc) => {
+  const el = document.querySelector('.items');
+  const produtResult = await fetchProducts(pc);
+  const { results } = produtResult;
+  results.forEach((produtId) => {
+    const finalResult = createProductItemElement(produtId);
+    el.appendChild(finalResult);
+  });
+};
+
+window.onload = () => { 
+  addChildElementItems('computador');
+};
