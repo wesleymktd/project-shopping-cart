@@ -6,7 +6,7 @@ const fetchItem = async (endPoint) => {
   // console.log(response)
   return response;
   } catch (err) {
-    throw new Error(err, 'You must provide a url');
+    throw new Error('You must provide a url');
   }
 };
 

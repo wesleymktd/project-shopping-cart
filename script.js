@@ -22,22 +22,25 @@ const createProductImageElement = (imageSource) => {
  * @returns {Element} Elemento criado.
  */
 
-// const addCartItens = () => { // aqui eu preciso chamar a função fetchItem com a id do produto clicado
-//   const but = document.querySelectorAll('.item__add');
-//   console.log(but);
-//   const cartItens = document.querySelector('.cart_items');
-//   but.addEventListener('click', () => {
-//     const itemId = document.querySelector('.item_id');
-//     const resultFethItem = fetchItem(itemId);
-//     const itemResult = createCartItemElement(resultFethItem); 
-//     cartItens.appendChild(itemResult);
-//   });
-// };
 const cartItemClickListener = (event) => {
-  const cli = event.target;
-  const cliPai = event.target.parentElement;
-  const remov = cliPai.removeChild(cli);
-  return remov;
+   event.target.remove();
+   
+  // const cliPai = event.target.parentElement;
+  // const remov = cliPai.removeChild(cli);
+  // return remov;
+};
+const recoverData = () => {
+  const recoverCart = getSavedCartItems();
+  const elem = document.querySelector('.cart__items');
+  if (recoverCart) {
+    recoverCart.forEach((element) => {
+      const linha = document.createElement('li');
+      linha.className = 'cart__item';
+      linha.innerText = element;
+      elem.appendChild(linha);
+      linha.addEventListener('click', cartItemClickListener);
+    });
+  }
 };
 
 const createCartItemElement = ({ id, title, price }) => { // parametro object
@@ -45,6 +48,7 @@ const createCartItemElement = ({ id, title, price }) => { // parametro object
   li.className = 'cart__item';
   li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
   li.addEventListener('click', cartItemClickListener);
+  saveCartItems(li.innerText);
   return li;
 };
 
@@ -56,7 +60,7 @@ const createCustomElement = (element, className, innerText) => {
      const nodFather = e.parentNode;
      const child = nodFather.firstChild;
      const fet = await fetchItem(child.innerText);
-     console.log(fet);
+    //  console.log(fet);
     el.appendChild(createCartItemElement(fet));
     });
   }
@@ -112,7 +116,7 @@ const addChildElementItems = async (pc) => {
   });
 };
 
-window.onload = () => { 
-  addChildElementItems('computador');
-  // addCartItens();
+window.onload = async () => {  
+ addChildElementItems('computador');
+ recoverData();
 };
