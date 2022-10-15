@@ -1,7 +1,8 @@
 const arr = [];
 const saveCartItems = (item) => {
   arr.push(item);
-  localStorage.cartItems = JSON.stringify(arr);
+  // localStorage.cartItems = JSON.stringify(arr);
+  localStorage.setItem('cartItems', JSON.stringify(arr));
 };
 
 if (typeof module !== 'undefined') {

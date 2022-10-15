@@ -22,15 +22,41 @@ const createProductImageElement = (imageSource) => {
  * @returns {Element} Elemento criado.
  */
 
+//  let result = 0;
+//  const sumCustomElement = async (elSumCart) => {
+//    const total = document.querySelector('.total-price');
+//    const textCart = elSumCart.innerText;
+//    const splitText = textCart.split(' ');
+//    const idProduct = splitText[1];
+//    const fet = await fetchItem(idProduct);
+//    const { price } = fet;
+//    if (sub === '-') {
+//     result -= price;
+//    } else {
+//     result += price;
+//    }
+
+//    total.innerText = `Total: ${result}`;
+//  };
+
 const cartItemClickListener = (event) => {
    event.target.remove();
-   
   // const cliPai = event.target.parentElement;
   // const remov = cliPai.removeChild(cli);
   // return remov;
 };
+
+const emptyCart = () => {
+  const buttonEmpty = document.querySelector('.empty-cart');
+  const listItems = document.getElementsByClassName('cart__items')[0];
+  console.log(listItems);
+  buttonEmpty.addEventListener('click', () => {
+      listItems.innerText = '';
+  });
+};
+
 const recoverData = () => {
-  const recoverCart = getSavedCartItems();
+  const recoverCart = JSON.parse(getSavedCartItems());
   const elem = document.querySelector('.cart__items');
   if (recoverCart) {
     recoverCart.forEach((element) => {
@@ -57,11 +83,10 @@ const createCustomElement = (element, className, innerText) => {
   const el = document.querySelector('.cart__items');
   if (element === 'button') {
     e.addEventListener('click', async () => {
-     const nodFather = e.parentNode;
-     const child = nodFather.firstChild;
-     const fet = await fetchItem(child.innerText);
-    //  console.log(fet);
-    el.appendChild(createCartItemElement(fet));
+      const nodFather = e.parentNode;
+      const child = nodFather.firstChild;
+      const fet = await fetchItem(child.innerText);
+      el.appendChild(createCartItemElement(fet)); 
     });
   }
   e.className = className;
@@ -119,4 +144,5 @@ const addChildElementItems = async (pc) => {
 window.onload = async () => {  
  addChildElementItems('computador');
  recoverData();
+ emptyCart();
 };
