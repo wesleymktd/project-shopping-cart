@@ -22,25 +22,41 @@ const createProductImageElement = (imageSource) => {
  * @returns {Element} Elemento criado.
  */
 
-//  let result = 0;
-//  const sumCustomElement = async (elSumCart) => {
-//    const total = document.querySelector('.total-price');
-//    const textCart = elSumCart.innerText;
-//    const splitText = textCart.split(' ');
-//    const idProduct = splitText[1];
-//    const fet = await fetchItem(idProduct);
-//    const { price } = fet;
-//    if (sub === '-') {
-//     result -= price;
-//    } else {
-//     result += price;
-//    }
+const sumCart = () => {
+  const total = document.querySelector('.total-price');
+  if (!localStorage.getItem('cartItems')) {
+    localStorage.setItem('cartItems', JSON.stringify([]));
+  }
+  const storage = JSON.parse(localStorage.getItem('cartItems'));
+  const sumTotalCart = storage
+    .reduce((acum, stringItemInf) => Number(stringItemInf.split('$')[1]) + acum, 0);
+  total.innerHTML = sumTotalCart;
+};
 
-//    total.innerText = `Total: ${result}`;
-//  };
+ const saveCartItems2 = (item) => {
+  if (!localStorage.getItem('cartItems')) {
+    localStorage.setItem('cartItems', JSON.stringify([]));
+  }
+  const storage = JSON.parse(localStorage.getItem('cartItems')); // trazendo pegando a informação do localstorage
+  // quando eu trago a informação do local storage tem que vir convertido para objeto através do parse
+  storage.push(item); // como eu garanti que meu localstorage é um array aí tem como eu dar um push com item passado por parametro
+  
+  saveCartItems(storage); // estou definindo o que vou colocar no localstorage
+  // eu tenho que subir a informação para o localstorage como string
+};
+
+const removeItemLocalStorage = (remov) => {
+  const storage = JSON.parse(localStorage.getItem('cartItems')); // trazendo pegando a informação do localstorage
+  const newBox = storage.filter((string) => remov.target.innerText !== string);
+  // vou definir uma nova caixa para o meu localstorage e filtrei o elemento diferente 
+  // da string clicada e retornei essa nova caixa para o localstorage
+  saveCartItems(newBox);
+}; 
 
 const cartItemClickListener = (event) => {
    event.target.remove();
+   removeItemLocalStorage(event);
+   sumCart();
   // const cliPai = event.target.parentElement;
   // const remov = cliPai.removeChild(cli);
   // return remov;
@@ -74,7 +90,8 @@ const createCartItemElement = ({ id, title, price }) => { // parametro object
   li.className = 'cart__item';
   li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
   li.addEventListener('click', cartItemClickListener);
-  saveCartItems(li.innerText);
+  saveCartItems2(li.innerText);
+  sumCart();
   return li;
 };
 
@@ -145,4 +162,5 @@ window.onload = async () => {
  addChildElementItems('computador');
  recoverData();
  emptyCart();
+ sumCart();
 };

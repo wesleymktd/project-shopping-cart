@@ -1,9 +1,6 @@
-const arr = [];
-const saveCartItems = (item) => {
-  arr.push(item);
-  // localStorage.cartItems = JSON.stringify(arr);
-  localStorage.setItem('cartItems', JSON.stringify(arr));
-};
+const saveCartItems = (storage) => localStorage.setItem('cartItems', JSON.stringify(storage)); 
+  // estou definindo o que vou colocar no localstorage
+  // eu tenho que subir a informação para o localstorage como string
 
 if (typeof module !== 'undefined') {
   module.exports = saveCartItems;
