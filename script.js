@@ -65,10 +65,11 @@ const cartItemClickListener = (event) => {
 const emptyCart = () => {
   const buttonEmpty = document.querySelector('.empty-cart');
   const listItems = document.getElementsByClassName('cart__items')[0];
-  console.log(listItems);
   buttonEmpty.addEventListener('click', () => {
-      listItems.innerText = '';
-  });
+    listItems.innerText = '';
+    const total = document.querySelector('.total-price');
+    total.innerText = 0;
+  }); 
 };
 
 const recoverData = () => {
@@ -148,6 +149,19 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
  * @returns {Element} Elemento de um item do carrinho.
  */
 
+const renderCharg = () => {
+  const div = document.createElement('p');
+  const cart = document.querySelector('.items');
+  div.className = 'loading';
+  div.innerText = 'carregando...';
+  cart.appendChild(div);
+};
+
+const removeCharg = () => {
+const remove = document.querySelector('.loading');
+remove.remove();
+};
+
 const addChildElementItems = async (pc) => {
   const el = document.querySelector('.items');
   const produtResult = await fetchProducts(pc);
@@ -159,7 +173,9 @@ const addChildElementItems = async (pc) => {
 };
 
 window.onload = async () => {  
- addChildElementItems('computador');
+ renderCharg();
+ await addChildElementItems('computador');
+ removeCharg();
  recoverData();
  emptyCart();
  sumCart();
