@@ -33,30 +33,34 @@ const sumCart = () => {
   total.innerHTML = sumTotalCart;
 };
 
- const saveCartItems2 = (item) => {
-  if (!localStorage.getItem('cartItems')) {
-    localStorage.setItem('cartItems', JSON.stringify([]));
-  }
-  const storage = JSON.parse(localStorage.getItem('cartItems')); // trazendo pegando a informação do localstorage
+let storage = []; // quando vai trabalhar com localstorage eu devo declarar a variavel para inicializar vazia e eu pego tudo que preciso e salvo no localstorage e depois reinicializo essa variavel para repetir o processo
+
+ const saveCartItems2 = () => {
+  const cartItens = document.querySelectorAll('.cart__item');
+  cartItens.forEach((item) => {
+    storage.push(item.innerText);
+  });
+  // let storage = JSON.parse(localStorage.getItem('cartItems')); // trazendo pegando a informação do localstorage
   // quando eu trago a informação do local storage tem que vir convertido para objeto através do parse
-  storage.push(item); // como eu garanti que meu localstorage é um array aí tem como eu dar um push com item passado por parametro
-  
+   // como eu garanti que meu localstorage é um array aí tem como eu dar um push com item passado por parametro
   saveCartItems(storage); // estou definindo o que vou colocar no localstorage
   // eu tenho que subir a informação para o localstorage como string
+  storage = [];
 };
 
-const removeItemLocalStorage = (remov) => {
-  const storage = JSON.parse(localStorage.getItem('cartItems')); // trazendo pegando a informação do localstorage
-  const newBox = storage.filter((string) => remov.target.innerText !== string);
-  // vou definir uma nova caixa para o meu localstorage e filtrei o elemento diferente 
-  // da string clicada e retornei essa nova caixa para o localstorage
-  saveCartItems(newBox);
-}; 
+// const removeItemLocalStorage = (remov) => {
+//   const storage = JSON.parse(localStorage.getItem('cartItems')); // trazendo pegando a informação do localstorage
+//   const newBox = storage.filter((string) => remov.target.innerText !== string);
+//   // vou definir uma nova caixa para o meu localstorage e filtrei o elemento diferente 
+//   // da string clicada e retornei essa nova caixa para o localstorage
+//   saveCartItems(newBox);
+// }; 
 
 const cartItemClickListener = (event) => {
    event.target.remove();
-   removeItemLocalStorage(event);
-   sumCart();
+  saveCartItems2();
+  //  removeItemLocalStorage(event);
+   sumCart(); // aqui a ordem importa porque eu ela depende do localstorage
   // const cliPai = event.target.parentElement;
   // const remov = cliPai.removeChild(cli);
   // return remov;
@@ -66,10 +70,13 @@ const emptyCart = () => {
   const buttonEmpty = document.querySelector('.empty-cart');
   const listItems = document.getElementsByClassName('cart__items')[0];
   buttonEmpty.addEventListener('click', () => {
+    localStorage.setItem('cartItems', JSON.stringify([]));
     listItems.innerText = '';
     const total = document.querySelector('.total-price');
     total.innerText = 0;
   }); 
+  saveCartItems2();
+  sumCart();
 };
 
 const recoverData = () => {
@@ -91,8 +98,6 @@ const createCartItemElement = ({ id, title, price }) => { // parametro object
   li.className = 'cart__item';
   li.innerText = `ID: ${id} | TITLE: ${title} | PRICE: $${price}`;
   li.addEventListener('click', cartItemClickListener);
-  saveCartItems2(li.innerText);
-  sumCart();
   return li;
 };
 
@@ -104,7 +109,9 @@ const createCustomElement = (element, className, innerText) => {
       const nodFather = e.parentNode;
       const child = nodFather.firstChild;
       const fet = await fetchItem(child.innerText);
-      el.appendChild(createCartItemElement(fet)); 
+      el.appendChild(createCartItemElement(fet));
+      saveCartItems2();
+      sumCart();
     });
   }
   e.className = className;
