@@ -32,5 +32,7 @@ npm start
 ```
 ## Tecnologias mais utilizadas:
 - JavaScript;
+- html;
+- Jest;
 - Api-requests;
 - Css;
