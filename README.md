@@ -1,13 +1,39 @@
-# :construction: README customizado em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto no qual você pode customizar e reutilizar todas as vezes que for executar o trybe-publisher.
+## 🧐 Sobre
 
-Para deixá-lo com a sua cara, basta alterar o seguinte arquivo da sua máquina: ~/.student-repo-publisher/custom/_NEW_README.md
+<h4 align="left"> 
+	Esse projeto se trata de um carrinho de compras totalmente dinâmico. Para isso ele consumirá os dados diretamente da API do Mercado Livre. Além disso é um projeto de desenvolvimento orientado a testes, ele é capaz de:
+ - Listar os produtos utiilizando a API do Mercado Livre;
+ - Adicionar o produto ao carrinho de compras;
+ - Remover o item do carrinho de compras ao clicar nele;
+ - ao reiniciar a página, os produtos que estavam anteriormente no carrinho continuam lá;
+ - ver o subtotal dos produtos que estão no carrinho;
+ 
+  
+</h4>
 
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+
+## Como utilizar:
+- Primeiro clone o repositório em sua máquina;
+
+```
+git clone git@github.com:wesleymktd/project-shopping-cart.git
+```
+- Go to the project directory;
+
+```
+cd Shopping-Cart
+```
+
+- Instale as dependências;
+
+```
+npm install
+```
+- inicie o serviço;
+```
+npm start
+```
+## Tecnologias mais utilizadas:
+- JavaScript;
+- Api-requests;
+- Css;
