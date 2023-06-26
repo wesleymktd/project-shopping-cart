@@ -15,10 +15,10 @@
 ```
 git clone git@github.com:wesleymktd/project-shopping-cart.git
 ```
-- Go to the project directory;
+- Vá para o diretório do projeto;
 
 ```
-cd Shopping-Cart
+cd project-shopping-cart
 ```
 
 - Instale as dependências;
