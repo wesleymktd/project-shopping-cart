@@ -8,7 +8,7 @@
  - Remover o item do carrinho de compras ao clicar nele;<br>
  - ao reiniciar a página, os produtos que estavam anteriormente no carrinho continuam lá;<br>
  - ver o subtotal dos produtos que estão no carrinho;
-</h4> 
+
 ## Como utilizar:
 - Primeiro clone o repositório em sua máquina;
 
