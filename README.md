@@ -32,6 +32,7 @@ npm install
 npm start
 ```
 ## Tecnologias mais utilizadas:
+
 - JavaScript;
 - Jest;
 - Api-requests;
